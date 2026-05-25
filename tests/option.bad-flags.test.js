@@ -12,6 +12,14 @@ test.each([
   { flags: '-a,-b' }, // try all the separators
   { flags: '-a|-b' },
   { flags: '-a -b' },
+  { flags: '--my--option' }, // consecutive dashes
+  { flags: '--a----' }, // consecutive dashes after prefix, passes longFlagExp and fails checkLongFlag
+  { flags: '--a--' }, // consecutive dashes at end
+  { flags: '--my-option-' }, // trailing dash
+  { flags: '--my--option <value>' }, // consecutive dashes with value
+  { flags: '--my-option- <value>' }, // trailing dash with value
+  { flags: '--ws, --my--option' }, // consecutive dashes in second dual long flag
+  { flags: '--bad--alias, --good' }, // consecutive dashes in first dual long flag
 ])('when construct Option with flags %p then throw', ({ flags }) => {
   expect(() => {
     new Option(flags);
