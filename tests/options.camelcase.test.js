@@ -44,16 +44,27 @@ test('when option defined with --Word then option property is Word', () => {
   expect(program.opts().Myoption).toBe(true);
 });
 
-test('when option defined with multiple dashes --word--word then option property is wordWord', () => {
-  const program = new commander.Command();
-  program.option('--my--option', 'description');
-  program.parse(['node', 'test', '--my--option']);
-  expect(program.opts().myOption).toBe(true);
+test.each([
+  ['--my--option', 'myOption'],
+  ['--my-option-', 'myOption'],
+  ['--my--special--option', 'mySpecialOption'],
+])(
+  'when option defined with %s then option property is %s',
+  (flag, expectedProperty) => {
+    const program = new commander.Command();
+    program.option(flag, 'description');
+    program.parse(['node', 'test', flag]);
+    expect(program.opts()[expectedProperty]).toBe(true);
+  },
+);
+
+test('camelcase handles multiple consecutive dashes', () => {
+  // Would have crashed with TypeError before fix
+  const option = new commander.Option('--my--option');
+  expect(option.attributeName()).toBe('myOption');
 });
 
-test('when option defined with trailing dash --word-word- then option property is wordWord', () => {
-  const program = new commander.Command();
-  program.option('--my-option-', 'description');
-  program.parse(['node', 'test', '--my-option-']);
-  expect(program.opts().myOption).toBe(true);
+test('camelcase handles trailing dash', () => {
+  const option = new commander.Option('--my-option-');
+  expect(option.attributeName()).toBe('myOption');
 });
