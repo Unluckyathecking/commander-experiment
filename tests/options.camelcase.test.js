@@ -43,3 +43,15 @@ test('when option defined with --Word then option property is Word', () => {
   program.parse(['node', 'test', '--Myoption']);
   expect(program.opts().Myoption).toBe(true);
 });
+
+test('option creation throws on consecutive dashes in long flag', () => {
+  expect(() => {
+    new commander.Option('--my--option');
+  }).toThrow("option creation failed due to consecutive dashes in long flag: '--my--option'");
+});
+
+test('option creation throws on trailing dash in long flag', () => {
+  expect(() => {
+    new commander.Option('--my-option-');
+  }).toThrow("option creation failed due to trailing dash in long flag: '--my-option-'");
+});
