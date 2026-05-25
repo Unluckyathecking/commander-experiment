@@ -41,6 +41,9 @@ program
   })
   .command('terminate', 'terminate due to signal', {
     executableFile: path.join(__dirname, 'pm-terminate.js'),
+  })
+  .command('terminate-sigterm', 'terminate due to SIGTERM', {
+    executableFile: path.join(__dirname, 'pm-terminate-sigterm.js'),
   });
 
 program.parse(process.argv);

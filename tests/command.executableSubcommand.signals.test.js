@@ -55,4 +55,13 @@ describeOrSkipOnWindows('signals', () => {
     );
     expect(status).toEqual(42);
   });
+
+  test('when command has exitOverride and executable subcommand sent SIGTERM then exit code is 143', () => {
+    const { status } = childProcess.spawnSync(
+      pmPath,
+      ['exit-override', 'terminate-sigterm'],
+      {},
+    );
+    expect(status).toEqual(143);
+  });
 });
