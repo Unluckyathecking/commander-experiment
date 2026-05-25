@@ -13,7 +13,7 @@ test.each([
   { flags: '-a|-b' },
   { flags: '-a -b' },
   { flags: '--my--option' }, // consecutive dashes
-  { flags: '--a----' }, // consecutive dashes after prefix, passes longFlagExp but fails checkLongFlag
+  { flags: '--a----' }, // consecutive dashes after prefix, passes longFlagExp and fails checkLongFlag
   { flags: '--a--' }, // consecutive dashes at end
   { flags: '--my-option-' }, // trailing dash
   { flags: '--my--option <value>' }, // consecutive dashes with value
