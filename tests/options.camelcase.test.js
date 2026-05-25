@@ -50,3 +50,10 @@ test('when option defined with multiple dashes --word--word then option property
   program.parse(['node', 'test', '--my--option']);
   expect(program.opts().myOption).toBe(true);
 });
+
+test('when option defined with trailing dash --word-word- then option property is wordWord', () => {
+  const program = new commander.Command();
+  program.option('--my-option-', 'description');
+  program.parse(['node', 'test', '--my-option-']);
+  expect(program.opts().myOption).toBe(true);
+});
